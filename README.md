@@ -126,6 +126,7 @@ Claude：让我帮你分析这个变更的跨系统影响...
 |------|------|
 | [Kafka Scanner](automation/kafka-scanner/) | 自动发现 Kafka topic 消费者 |
 | [API Scanner](automation/api-scanner/) | 自动扫描 HTTP API 调用关系 |
+| [Database Scanner](automation/database-scanner/) | 自动扫描数据库表读写关系 |
 
 ---
 
@@ -164,10 +165,23 @@ cross-system-impact/
 │
 ├── 📂 automation/                    # 自动化工具
 │   ├── kafka-scanner/
-│   └── api-scanner/
+│   ├── api-scanner/
+│   ├── database-scanner/
+│   ├── requirements.txt
+│   └── topology-schema.json
 │
-└── 📂 cicd/                          # CI/CD 集成
-    └── README.md
+├── 📂 scripts/                       # 辅助脚本
+│   ├── analyze-changes.py
+│   ├── generate-report.py
+│   └── convert-to-unified.py
+│
+├── 📂 cicd/                          # CI/CD 集成
+│   └── README.md
+│
+├── 📂 claude-config/                 # Claude Code 配置
+│   └── README.md
+│
+└── CHANGELOG.md                      # 版本变更记录
 ```
 
 ---

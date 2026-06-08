@@ -1,0 +1,97 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Cross-System Topology Schema",
+  "description": "统一的拓扑信息输出格式",
+  "type": "object",
+  "required": ["scan_time", "version", "services", "dependencies"],
+  "properties": {
+    "scan_time": {
+      "type": "string",
+      "format": "date-time",
+      "description": "扫描时间 (ISO 8601)"
+    },
+    "version": {
+      "type": "string",
+      "const": "1.0.0",
+      "description": "Schema 版本"
+    },
+    "source": {
+      "type": "string",
+      "description": "扫描来源 (kafka/api/database/code)"
+    },
+    "services": {
+      "type": "array",
+      "description": "服务列表",
+      "items": {
+        "type": "object",
+        "required": ["name"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "服务名称"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["internal", "external", "unknown"],
+            "description": "服务类型"
+          },
+          "tech_stack": {
+            "type": "string",
+            "description": "技术栈"
+          },
+          "team": {
+            "type": "string",
+            "description": "负责团队"
+          }
+        }
+      }
+    },
+    "dependencies": {
+      "type": "array",
+      "description": "依赖关系列表",
+      "items": {
+        "type": "object",
+        "required": ["source", "target", "type"],
+        "properties": {
+          "source": {
+            "type": "string",
+            "description": "源服务"
+          },
+          "target": {
+            "type": "string",
+            "description": "目标服务"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["http", "kafka", "rabbitmq", "database", "cache", "grpc", "other"],
+            "description": "依赖类型"
+          },
+          "details": {
+            "type": "object",
+            "description": "依赖详情",
+            "properties": {
+              "topic": { "type": "string" },
+              "queue": { "type": "string" },
+              "exchange": { "type": "string" },
+              "url": { "type": "string" },
+              "method": { "type": "string" },
+              "table": { "type": "string" },
+              "database": { "type": "string" },
+              "key_pattern": { "type": "string" }
+            }
+          },
+          "fields": {
+            "type": "array",
+            "description": "涉及的字段",
+            "items": { "type": "string" }
+          },
+          "direction": {
+            "type": "string",
+            "enum": ["read", "write", "bidirectional"],
+            "description": "数据流向"
+          }
+        }
+      }
+    }
+  }
+}
